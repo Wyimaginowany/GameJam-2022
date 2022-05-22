@@ -25,6 +25,10 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         playerControls = new PlayerControls();
+    }
+
+    private void OnEnable()
+    {
         playerControls.Enable();
         playerControls.Player.Jump.performed += Jump;
     }
@@ -87,6 +91,6 @@ public class PlayerMovement : MonoBehaviour
     public void KillPlayerMovement()
     {
         playerControls.Disable();
-        Instantiate(nextPlayer, startingPosition, Quaternion.identity);
+        SendMessageUpwards("SpawnNextPlayer");
     }
 }

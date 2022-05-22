@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
+    [SerializeField] PlayerPool pool;
     Rigidbody2D rigidbody;
     PlayerMovement playerMovement;
+
 
     private void Start()
     {
