@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 4294123198675348316}
   - component: {fileID: 4781501210198063840}
   - component: {fileID: 5898340531564727081}
+  - component: {fileID: 8061194850243468622}
+  - component: {fileID: 1557512517736649921}
   m_Layer: 10
   m_Name: Player Last
   m_TagString: Untagged
@@ -227,6 +229,36 @@ TrailRenderer:
   m_MinVertexDistance: 0.01
   m_Autodestruct: 0
   m_Emitting: 1
+--- !u!111 &8061194850243468622
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 886066341684224624}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 45c5232d11b761a4a883c7ae9dce77d1, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 45c5232d11b761a4a883c7ae9dce77d1, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
+--- !u!114 &1557512517736649921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 886066341684224624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24e33e7542f92394f960d0838d88f70f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animCom: {fileID: 8061194850243468622}
+  eventID: BoopsTrackOne
 --- !u!1 &945687778211596151
 GameObject:
   m_ObjectHideFlags: 0

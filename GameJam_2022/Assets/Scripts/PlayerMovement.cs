@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] bool isOnWall;
     [SerializeField] bool isOnGround;
 
+    bool isDead = false;
     PlayerControls playerControls;
     Vector2 movementVector;
     BoxCollider2D collider;
@@ -94,7 +95,9 @@ public class PlayerMovement : MonoBehaviour
 
     public void KillPlayerMovement()
     {
+        if (isDead) return;
         playerControls.Disable();
         SendMessageUpwards("SpawnNextPlayer");
+        isDead = true;
     }
 }
