@@ -30,7 +30,7 @@ public class PlayerMovement : MonoBehaviour
     private void OnEnable()
     {
         playerControls.Enable();
-        playerControls.Player.Jump.performed += Jump;
+        //playerControls.Player.Jump.performed += Jump;
     }
 
     private void Start()
@@ -49,6 +49,10 @@ public class PlayerMovement : MonoBehaviour
         {
             rigidBody.velocity = new Vector2(rigidBody.velocity.x, Mathf.Clamp(rigidBody.velocity.y, -wallSlidingSpeed, float.MaxValue));
         }
+        if (Input.GetKey(KeyCode.Space))
+        {
+            Jump();
+        }
     }
 
     private void FixedUpdate()
@@ -56,7 +60,7 @@ public class PlayerMovement : MonoBehaviour
         rigidBody.velocity = new Vector2(movementVector.x * movementSpeed, rigidBody.velocity.y);
     }
 
-    private void Jump(InputAction.CallbackContext context)
+    private void Jump()
     {
         if (isGrounded() || isOnPlayer())
         {
