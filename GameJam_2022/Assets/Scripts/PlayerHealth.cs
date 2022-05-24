@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] PlayerPool pool;
+    [SerializeField] bool isLastPlayer = false;
     Rigidbody2D rigidbody;
     PlayerMovement playerMovement;
 
@@ -13,6 +14,16 @@ public class PlayerHealth : MonoBehaviour
     {
         rigidbody = GetComponent<Rigidbody2D>();
         playerMovement = GetComponent<PlayerMovement>();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Tab) && !isLastPlayer)
+        {
+            rigidbody.constraints = RigidbodyConstraints2D.FreezeAll;
+            playerMovement.KillPlayerMovement();
+            gameObject.layer = LayerMask.NameToLayer("Dead");
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
