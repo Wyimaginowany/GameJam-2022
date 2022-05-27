@@ -15,6 +15,7 @@ public class PlayerHealth : MonoBehaviour
     AudioSource audio;
     Rigidbody2D rigidbody;
     PlayerMovement playerMovement;
+   public bool isOnSpawn = true;
 
 
     private void Start()
@@ -26,7 +27,7 @@ public class PlayerHealth : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Tab) && !isLastPlayer)
+        if (Input.GetKeyDown(KeyCode.Tab) && !isLastPlayer && !isOnSpawn)
         {
             PlayerDeath();
         }
@@ -37,6 +38,32 @@ public class PlayerHealth : MonoBehaviour
         if (collision.collider.CompareTag("Trap"))
         {
             PlayerDeath();
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Spawn"))
+        {
+            isOnSpawn = true;
+        }
+
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Spawn"))
+        {
+            isOnSpawn = false;
+        }
+
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.collider.CompareTag("Spawn"))
+        {
+            isOnSpawn = false;
         }
     }
 
