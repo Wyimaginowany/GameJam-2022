@@ -6,12 +6,19 @@ public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] PlayerPool pool;
     [SerializeField] bool isLastPlayer = false;
+    [SerializeField] GameObject[] bodyParts;
+    [SerializeField] GameObject deadBody;
+    [SerializeField] AudioClip deathSound;
+
+    bool isDead = false;
+    AudioSource audio;
     Rigidbody2D rigidbody;
     PlayerMovement playerMovement;
 
 
     private void Start()
     {
+        audio = GetComponent<AudioSource>();
         rigidbody = GetComponent<Rigidbody2D>();
         playerMovement = GetComponent<PlayerMovement>();
     }
@@ -20,9 +27,7 @@ public class PlayerHealth : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Tab) && !isLastPlayer)
         {
-            rigidbody.constraints = RigidbodyConstraints2D.FreezeAll;
-            playerMovement.KillPlayerMovement();
-            gameObject.layer = LayerMask.NameToLayer("Dead");
+            PlayerDeath();
         }
     }
 
@@ -30,9 +35,24 @@ public class PlayerHealth : MonoBehaviour
     {
         if (collision.collider.CompareTag("Trap"))
         {
-            playerMovement.KillPlayerMovement();
-            rigidbody.constraints = RigidbodyConstraints2D.FreezeAll;
-            gameObject.layer = LayerMask.NameToLayer("Dead");
+            PlayerDeath();
         }
+    }
+
+    private void PlayerDeath()
+    {
+        if (isDead) return;
+
+        rigidbody.constraints = RigidbodyConstraints2D.FreezeAll;
+        playerMovement.KillPlayerMovement();
+        gameObject.layer = LayerMask.NameToLayer("Dead");
+        audio.PlayOneShot(deathSound);
+
+        foreach (GameObject part in bodyParts)
+        {
+            part.SetActive(false);
+        }
+        deadBody.SetActive(true);
+        isDead = true;
     }
 }
