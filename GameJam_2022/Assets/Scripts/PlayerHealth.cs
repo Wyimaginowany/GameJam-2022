@@ -9,6 +9,7 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] GameObject[] bodyParts;
     [SerializeField] GameObject deadBody;
     [SerializeField] AudioClip deathSound;
+    [SerializeField] ParticleSystem deathParticle;
 
     bool isDead = false;
     AudioSource audio;
@@ -52,6 +53,7 @@ public class PlayerHealth : MonoBehaviour
         {
             part.SetActive(false);
         }
+        deathParticle.Play();
         deadBody.SetActive(true);
         isDead = true;
     }
