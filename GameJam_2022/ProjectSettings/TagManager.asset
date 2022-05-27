@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Trap
   - Spawn
+  - End
   layers:
   - Default
   - TransparentFX

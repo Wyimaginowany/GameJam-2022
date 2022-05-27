@@ -39,6 +39,11 @@ public class PlayerHealth : MonoBehaviour
         {
             PlayerDeath();
         }
+
+        if (collision.collider.CompareTag("End"))
+        {
+            Debug.Log("Finish Level");
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

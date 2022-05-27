@@ -9,6 +9,7 @@ public class PlayerPool : MonoBehaviour
     [SerializeField] GameObject[] players;
     [SerializeField] TextMeshProUGUI playerLifesText;
     [SerializeField] GameObject can;
+    [SerializeField] GameObject endLights;
 
     int currentPlayer = 0;
     int playerLifes;
@@ -21,7 +22,11 @@ public class PlayerPool : MonoBehaviour
 
     public void SpawnNextPlayer()
     {
-        if (playerLifes == 0) can.SetActive(false);
+        if (playerLifes == 0)
+        {
+            can.SetActive(false);
+            endLights.SetActive(true);
+        }
         else
         {
             playerLifesText.text = (playerLifes).ToString() + " x";
