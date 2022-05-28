@@ -10,12 +10,15 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] GameObject deadBody;
     [SerializeField] AudioClip deathSound;
     [SerializeField] ParticleSystem deathParticle;
+    [SerializeField] float holdDur = 2f;
 
+    float timer;
+    LevelLoader loader;
     bool isDead = false;
     AudioSource audio;
     Rigidbody2D rigidbody;
     PlayerMovement playerMovement;
-   public bool isOnSpawn = true;
+    public bool isOnSpawn = true;
 
 
     private void Start()
@@ -23,13 +26,37 @@ public class PlayerHealth : MonoBehaviour
         audio = GetComponent<AudioSource>();
         rigidbody = GetComponent<Rigidbody2D>();
         playerMovement = GetComponent<PlayerMovement>();
+        loader = GameObject.Find("Level Loader").GetComponent<LevelLoader>();
+        timer = Time.time;
     }
 
     private void Update()
     {
+        HandleGameRestarting();
+
         if (Input.GetKeyDown(KeyCode.Tab) && !isLastPlayer && !isOnSpawn)
         {
             PlayerDeath();
+        }
+    }
+
+    private void HandleGameRestarting()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            timer = Time.time;
+        }
+        else if (Input.GetKey(KeyCode.R))
+        {
+            if (Time.time - timer > holdDur)
+            {
+                timer = float.PositiveInfinity;
+                loader.RestartLevel();
+            }
+        }
+        else
+        {
+            timer = float.PositiveInfinity;
         }
     }
 
@@ -42,7 +69,7 @@ public class PlayerHealth : MonoBehaviour
 
         if (collision.collider.CompareTag("End"))
         {
-            Debug.Log("Finish Level");
+            loader.LoadNextLevel();
         }
     }
 

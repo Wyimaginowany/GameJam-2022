@@ -21,8 +21,6 @@ public class PlayerMovement : MonoBehaviour
     Rigidbody2D rigidBody;
     Vector2 startingPosition;
 
-    [SerializeField] GameObject nextPlayer;
-
     private void Awake()
     {
         playerControls = new PlayerControls();
@@ -86,9 +84,9 @@ public class PlayerMovement : MonoBehaviour
     private bool onWall()
     {
         RaycastHit2D wallHitRight = Physics2D.BoxCast(
-        collider.bounds.center, collider.bounds.size, 0, new Vector2(1, 0), 0.1f, groundLayer);
+        collider.bounds.center, collider.bounds.size, 0, new Vector2(1, 0), 0.01f, groundLayer);
         RaycastHit2D wallHitLeft = Physics2D.BoxCast(
-        collider.bounds.center, collider.bounds.size, 0, new Vector2(-1, 0), 0.1f, groundLayer);
+        collider.bounds.center, collider.bounds.size, 0, new Vector2(-1, 0), 0.01f, groundLayer);
 
         return (wallHitRight.collider != null || wallHitLeft.collider != null);
     }

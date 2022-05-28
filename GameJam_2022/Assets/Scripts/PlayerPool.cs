@@ -11,11 +11,13 @@ public class PlayerPool : MonoBehaviour
     [SerializeField] GameObject can;
     [SerializeField] GameObject endLights;
 
+    LevelLoader loader;
     int currentPlayer = 0;
     int playerLifes;
 
     private void Start()
     {
+        loader = GameObject.Find("Level Loader").GetComponent<LevelLoader>();
         playerLifes = players.Length - 1;
         SpawnNextPlayer();
     }
@@ -38,11 +40,16 @@ public class PlayerPool : MonoBehaviour
         }
         else
         {
-            Debug.Log("Show end screen");
+            Invoke("Restart", .5f);
         }
 
         playerLifes--;
         currentPlayer++;
+    }
+
+    private void Restart()
+    {
+        loader.RestartLevel();
     }
 
 }

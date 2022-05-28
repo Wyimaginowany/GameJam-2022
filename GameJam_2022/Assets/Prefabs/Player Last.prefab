@@ -113,7 +113,6 @@ MonoBehaviour:
     m_Bits: 2048
   isOnWall: 0
   isOnGround: 0
-  nextPlayer: {fileID: 886066341684224624}
 --- !u!114 &4781501210198063840
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135,6 +134,8 @@ MonoBehaviour:
   deadBody: {fileID: 7348899284633636583}
   deathSound: {fileID: 8300000, guid: 1bf2c51546443834494e72ca90709118, type: 3}
   deathParticle: {fileID: 3592672717300116582}
+  holdDur: 1.5
+  isOnSpawn: 1
 --- !u!96 &5898340531564727081
 TrailRenderer:
   serializedVersion: 2
