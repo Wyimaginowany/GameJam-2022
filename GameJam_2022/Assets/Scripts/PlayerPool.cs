@@ -8,7 +8,7 @@ public class PlayerPool : MonoBehaviour
 
     [SerializeField] GameObject[] players;
     [SerializeField] TextMeshProUGUI playerLifesText;
-    [SerializeField] GameObject can;
+    [SerializeField] GameObject[] can;
     [SerializeField] GameObject endLights;
 
     LevelLoader loader;
@@ -26,7 +26,10 @@ public class PlayerPool : MonoBehaviour
     {
         if (playerLifes == 0)
         {
-            can.SetActive(false);
+            foreach (GameObject trash in can)
+            {
+                trash.SetActive(false);
+            }
             endLights.SetActive(true);
         }
         else
