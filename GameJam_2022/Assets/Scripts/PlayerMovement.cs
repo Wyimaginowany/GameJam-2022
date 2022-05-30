@@ -10,16 +10,17 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float jumpForce = 2f;
     [SerializeField] LayerMask groundLayer;
     [SerializeField] LayerMask deadPlayerLayer;
+    [SerializeField] PlayerPool pool;
 
-    [SerializeField] bool isOnWall;
-    [SerializeField] bool isOnGround;
-
+    float wasOnGround;
+    float jumpWasPressed;
     bool isDead = false;
     PlayerControls playerControls;
-    Vector2 movementVector;
     BoxCollider2D collider;
     Rigidbody2D rigidBody;
+    Vector2 movementVector;
     Vector2 startingPosition;
+    Vector2 parentVelocity;
 
     private void Awake()
     {
@@ -42,13 +43,34 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         movementVector = playerControls.Player.Move.ReadValue<Vector2>();
-        isOnGround = isGrounded();
-        isOnWall = onWall();
-        if (isOnWall && movementVector.x !=0)
+        if (transform.parent.GetComponent<Rigidbody2D>() != null)
+        {
+            parentVelocity = transform.parent.GetComponent<Rigidbody2D>().velocity;
+        }
+        else
+        {
+            parentVelocity = new Vector2(0, 0);
+        }
+
+        if (onWall() && movementVector.x !=0)
         {
             rigidBody.velocity = new Vector2(rigidBody.velocity.x, Mathf.Clamp(rigidBody.velocity.y, -wallSlidingSpeed, float.MaxValue));
         }
-        if (Input.GetKey(KeyCode.Space))
+
+        wasOnGround -= Time.deltaTime;
+        jumpWasPressed -= Time.deltaTime;
+
+        if (isGrounded() || isOnPlayer())
+        {
+            wasOnGround = 0.07f;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            jumpWasPressed = 0.1f;
+        }
+
+        if (jumpWasPressed > 0 && wasOnGround > 0)
         {
             Jump();
         }
@@ -56,15 +78,14 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rigidBody.velocity = new Vector2(movementVector.x * movementSpeed, rigidBody.velocity.y);
+        rigidBody.velocity = new Vector2(parentVelocity.x + movementVector.x * movementSpeed, rigidBody.velocity.y);
     }
 
     private void Jump()
     {
-        if (isGrounded() || isOnPlayer())
-        {
-            rigidBody.velocity = new Vector2(rigidBody.velocity.x, jumpForce);
-        }
+        jumpWasPressed = 0;
+        wasOnGround = 0;
+        rigidBody.velocity = new Vector2(rigidBody.velocity.x, jumpForce);
     }
 
     private bool isGrounded()
@@ -95,7 +116,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (isDead) return;
         playerControls.Disable();
-        SendMessageUpwards("SpawnNextPlayer");
+        pool.SpawnNextPlayer();
         isDead = true;
     }
 }

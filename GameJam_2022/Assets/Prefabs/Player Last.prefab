@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 4708147818279229066}
   m_Layer: 10
   m_Name: Player Last
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -111,8 +111,7 @@ MonoBehaviour:
   deadPlayerLayer:
     serializedVersion: 2
     m_Bits: 2048
-  isOnWall: 0
-  isOnGround: 0
+  pool: {fileID: 0}
 --- !u!114 &4781501210198063840
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -281,7 +280,8 @@ AudioSource:
   m_GameObject: {fileID: 886066341684224624}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: edd2b1c136c0f954a93b3357b35bf4a8,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1

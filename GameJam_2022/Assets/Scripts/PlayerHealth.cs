@@ -12,6 +12,7 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] ParticleSystem deathParticle;
     [SerializeField] float holdDur = 2f;
 
+    bool playSound = true;
     float timer;
     LevelLoader loader;
     bool isDead = false;
@@ -62,10 +63,16 @@ public class PlayerHealth : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (collision.collider.CompareTag("Floor"))
+        {
+            playSound = false;
+            PlayerDeath();
+        }
         if (collision.collider.CompareTag("Trap"))
         {
             PlayerDeath();
         }
+
 
         if (collision.collider.CompareTag("End"))
         {
@@ -78,6 +85,11 @@ public class PlayerHealth : MonoBehaviour
         if (collision.CompareTag("Spawn"))
         {
             isOnSpawn = true;
+        }
+
+        if (collision.CompareTag("Trap"))
+        {
+            PlayerDeath();
         }
 
     }
@@ -106,7 +118,8 @@ public class PlayerHealth : MonoBehaviour
         rigidbody.constraints = RigidbodyConstraints2D.FreezeAll;
         playerMovement.KillPlayerMovement();
         gameObject.layer = LayerMask.NameToLayer("Dead");
-        audio.PlayOneShot(deathSound);
+
+        if (playSound) audio.PlayOneShot(deathSound);
 
         foreach (GameObject part in bodyParts)
         {
