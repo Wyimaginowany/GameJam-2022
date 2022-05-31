@@ -125,7 +125,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pool: {fileID: 0}
-  isLastPlayer: 1
+  isLastPlayer: 0
   bodyParts:
   - {fileID: 2137349543572497262}
   - {fileID: 945687778211596151}
