@@ -6,12 +6,18 @@ using UnityEngine.Audio;
 
 public class OptionsMenu : MonoBehaviour
 {
-
     [SerializeField] GameObject optionsMenu;
-
-    const string MIXER_MUSIC = "musicVolume";
     [SerializeField] AudioMixer mixer;
     [SerializeField] Slider slider;
+
+    float masterVolume;
+    const string MIXER_MUSIC = "musicVolume";
+
+    private void OnEnable()
+    {
+        mixer.GetFloat("musicVolume", out masterVolume);
+        slider.value = masterVolume;
+    }
 
     private void Awake()
     {
@@ -20,7 +26,7 @@ public class OptionsMenu : MonoBehaviour
 
     void SetMusicVolume(float value)
     {
-        mixer.SetFloat(MIXER_MUSIC, Mathf.Log10(value) * 20);
+        mixer.SetFloat(MIXER_MUSIC, value);
     }
 
     public void ShowOptions()

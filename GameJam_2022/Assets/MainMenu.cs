@@ -19,9 +19,17 @@ public class MainMenu : MonoBehaviour
     [SerializeField] AudioMixer mixer;
     [SerializeField] Slider slider;
 
+    float masterVolume;
     bool isPlaying = false;
 
     const string MIXER_MUSIC = "musicVolume";
+
+    private void OnEnable()
+    {
+        mixer.GetFloat("musicVolume", out masterVolume);
+        Debug.Log(masterVolume);
+        slider.value = masterVolume;
+    }
 
     private void Awake()
     {
@@ -30,7 +38,7 @@ public class MainMenu : MonoBehaviour
 
     void SetMusicVolume(float value)
     {
-        mixer.SetFloat(MIXER_MUSIC, Mathf.Log10(value) * 20);
+        mixer.SetFloat(MIXER_MUSIC, value);
     }
 
     public void ShowPlayLights()
@@ -58,6 +66,9 @@ public class MainMenu : MonoBehaviour
 
     public void PlayGame()
     {
+        playButton.SetActive(false);
+        quitButton.SetActive(false);
+        optionsButton.SetActive(false);
         isPlaying = true;
         loader.LoadNextLevel();
     }
