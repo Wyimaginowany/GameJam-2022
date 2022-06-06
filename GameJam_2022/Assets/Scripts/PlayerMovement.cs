@@ -65,7 +65,7 @@ public class PlayerMovement : MonoBehaviour
             wasOnGround = 0.07f;
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow))
         {
             jumpWasPressed = 0.1f;
         }

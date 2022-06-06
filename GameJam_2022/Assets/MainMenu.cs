@@ -27,7 +27,6 @@ public class MainMenu : MonoBehaviour
     private void OnEnable()
     {
         mixer.GetFloat("musicVolume", out masterVolume);
-        Debug.Log(masterVolume);
         slider.value = masterVolume;
     }
 
